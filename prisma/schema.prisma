@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+    id          Int         @id @default(autoincrement())
+    createdAt   DateTime    @default(now()) @map("created_at")
+    updatedAt   DateTime    @updatedAt @map("updated_at")
+
+    login       String      @unique
+    password    String
+
+    name        String    
+
+    changes     Change[]
+    clients     Client[]
+    services    Service[]
+    sessions    Session[]
+}
+
+
+model Session {
+  id          Int         @id @default(autoincrement())
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+
+  hour        String
+  alias       String
+  contact     String
+  service     String
+  price       String
+
+  userId      Int @map("user_id")
+  user        User @relation(fields: [userId], references: [id])
+}
+
+model Service {
+    id          Int         @id @default(autoincrement())
+    createdAt   DateTime    @default(now()) @map("created_at")
+    updatedAt   DateTime    @updatedAt @map("updated_at")
+
+    name        String      @unique
+    price       String
+
+    userId      Int @map("user_id")
+    user        User @relation(fields: [userId], references: [id])
+}
+
+model Change {
+    id          Int         @id @default(autoincrement())
+    createdAt   DateTime    @default(now()) @map("created_at")
+    updatedAt   DateTime    @updatedAt @map("updated_at")
+
+    date        String
+    length      String
+
+    userId      Int @map("user_id")
+    user        User @relation(fields: [userId], references: [id])
+}
+
+model Client {
+    id          Int         @id @default(autoincrement())
+    createdAt   DateTime    @default(now()) @map("created_at")
+    updatedAt   DateTime    @updatedAt @map("updated_at")
+
+    alias       String      @unique
+    contact     String
+
+    userId      Int @map("user_id")
+    user        User @relation(fields: [userId], references: [id])
+}

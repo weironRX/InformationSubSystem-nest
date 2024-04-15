@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:dev.db"
+  provider = "mysql"
+  url      = "mysql://Freelance_leafanswer:c15b21b14e3f9cee2c41ce01d038bbf036ab498f@jfb.h.filess.io:3307/Freelance_leafanswer"
 }
 
 model User {

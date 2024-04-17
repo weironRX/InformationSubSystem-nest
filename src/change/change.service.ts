@@ -2,11 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { ChangeDto } from './dto/change.dto';
 import { returnChangeObject } from './return-change.object';
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class ChangeService {
     constructor(
-		private prisma: PrismaService,
+		private prisma: PrismaClient,
 	) {}
 
     async getAll(id: number) {

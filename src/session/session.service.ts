@@ -2,11 +2,12 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { SessionDto } from './dto/session.dto';
 import { returnSessionObject } from './return-session.object';
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class SessionService {
     constructor(
-		private prisma: PrismaService,
+		private prisma: PrismaClient,
 	) {}
 
     async getByDay(id: number, date: string) {

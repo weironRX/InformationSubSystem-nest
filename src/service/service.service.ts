@@ -2,11 +2,12 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { ServiceDto } from './dto/service.dto';
 import { returnServiceObject } from './return-service.object';
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class ServiceService {
     constructor(
-		private prisma: PrismaService,
+		private prisma: PrismaClient,
 	) {}
 
     async getAll(id: number) {

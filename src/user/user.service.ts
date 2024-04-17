@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/prisma.service'
 import { returnUserObject } from './return-user.object'
-import { Prisma, User } from '@prisma/client'
+import { Prisma, PrismaClient, User } from '@prisma/client'
 import { UserDto } from './dto/user.dto'
 import { BadRequestException } from '@nestjs/common/exceptions'
 import { hash } from 'argon2'
@@ -9,7 +9,7 @@ import { hash } from 'argon2'
 @Injectable()
 export class UserService {
 	constructor(
-		private prisma: PrismaService,
+		private prisma: PrismaClient,
 	) {}
 
 

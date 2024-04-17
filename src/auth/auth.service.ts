@@ -9,14 +9,14 @@ import { AuthDto } from './dto/auth.dto'
 import { RegisterDto } from './dto/register.dto'
 import { hash } from 'argon2'
 import { JwtService } from '@nestjs/jwt'
-import { User } from '@prisma/client'
+import { PrismaClient, User } from '@prisma/client'
 import { tokensTime } from 'src/config/jwt.config'
 import { verify } from 'argon2'
 
 @Injectable()
 export class AuthService {
 	constructor(
-		private prisma: PrismaService,
+		private prisma: PrismaClient,
 		private jwt: JwtService,
 	) {}
 

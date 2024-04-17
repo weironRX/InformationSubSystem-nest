@@ -2,11 +2,12 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { ClientDto } from './dto/client.dto';
 import { returnClientObject } from './return-client.object';
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class ClientService {
     constructor(
-		private prisma: PrismaService,
+		private prisma: PrismaClient,
 	) {}
 
 

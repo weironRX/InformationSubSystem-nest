@@ -15,6 +15,6 @@ import { ClientModule } from './client/client.module';
 @Module({
   imports: [ConfigModule.forRoot(), AuthModule, UserModule, ChangeModule, ServiceModule, SessionModule, ClientModule],
   controllers: [AppController],
-  providers: [AppService, PrismaService, ServiceService, ChangeService],
+  providers: [AppService],
 })
 export class AppModule {}

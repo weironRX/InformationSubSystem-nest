@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://project_claytimego:84004cbbc1ae3faeb0e86a6a224a83861d7cd567@9ui.h.filess.io:3307/project_claytimego"
+  url      = env("DATABASE_URL")
 }
 
 model User {

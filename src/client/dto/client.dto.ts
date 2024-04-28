@@ -12,3 +12,12 @@ export class ClientDto {
     @IsString()
 	contact: string
 }
+export class CreateClientDto {
+	@IsString()
+	@IsOptional()
+	alias: string
+
+	@IsOptional()
+    @IsString()
+	contact: string
+}

@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { ClientDto } from './dto/client.dto';
+import { ClientDto, CreateClientDto } from './dto/client.dto';
 import { returnClientObject } from './return-client.object';
 import { PrismaClient } from '@prisma/client';
 
@@ -59,7 +59,7 @@ export class ClientService {
         return res
     }
 
-    async create(id: number, dto: ClientDto) {
+    async create(id: number, dto: CreateClientDto) {
         const existClient = await this.prisma.client.findUnique({
             where: {
                 alias: dto.alias

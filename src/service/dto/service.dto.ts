@@ -11,3 +11,12 @@ export class ServiceDto {
 	@IsOptional()
 	price: string
 }
+
+export class CreateServiceDto {
+	@IsString()
+	@IsOptional()
+	name: string
+
+	@IsOptional()
+	price: string
+}

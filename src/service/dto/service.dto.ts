@@ -13,7 +13,6 @@ export class ServiceDto {
 }
 
 export class CreateServiceDto {
-	@IsString()
 	@IsOptional()
 	name: string
 

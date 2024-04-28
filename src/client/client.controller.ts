@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { Auth } from 'src/auth/decorators/auth.decorator'
 import { CurrentUser } from 'src/auth/decorators/user.decorator'
-import { ClientDto } from './dto/client.dto';
+import { ClientDto, CreateClientDto } from './dto/client.dto';
 import { ApiQuery } from '@nestjs/swagger';
 
 @Controller('client')
@@ -48,7 +48,7 @@ export class ClientController {
   @Post()
   @Auth()
 	@HttpCode(200)
-  async create(@CurrentUser('id') id: number, @Body() dto: ClientDto) {
+  async create(@CurrentUser('id') id: number, @Body() dto: CreateClientDto) {
     return this.clientService.create(id, dto);
   }
 

@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { Auth } from 'src/auth/decorators/auth.decorator'
 import { CurrentUser } from 'src/auth/decorators/user.decorator'
-import { ServiceDto } from './dto/service.dto';
+import { CreateServiceDto, ServiceDto } from './dto/service.dto';
 
 @Controller('service')
 export class ServiceController {
@@ -37,7 +37,7 @@ export class ServiceController {
   @Post()
   @Auth()
 	@HttpCode(200)
-  async create(@CurrentUser('id') id: number, @Body() dto: ServiceDto) {
+  async create(@CurrentUser('id') id: number, @Body() dto: CreateServiceDto) {
     return this.serviceService.create(id, dto);
   }
 

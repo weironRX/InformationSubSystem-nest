@@ -63,6 +63,14 @@ export class ServiceService {
     }
 
     async update(id: number, dto: ServiceDto) {
+        const existService = await this.prisma.service.findFirst({
+            where: {
+                name: dto.name
+            }
+        })
+
+        if (existService) return
+
         const updatedService = await this.prisma.service.update({
             where: {
                 id: dto.id,

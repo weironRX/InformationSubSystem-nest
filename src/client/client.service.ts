@@ -83,7 +83,15 @@ export class ClientService {
     }
 
     async update(id: number, dto: ClientDto) {
-        console.log(dto)
+        
+        const existClient = await this.prisma.client.findFirst({
+            where: {
+                alias: dto.alias
+            }
+        })
+
+        if (existClient) return
+
         const updatedService = await this.prisma.client.update({
             where: {
                 id: dto.id,

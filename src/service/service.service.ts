@@ -65,9 +65,10 @@ export class ServiceService {
     async update(id: number, dto: ServiceDto) {
         const updatedService = await this.prisma.service.update({
             where: {
-                name: dto.name,
+                id: dto.id,
             },
             data: {
+                name: dto.name,
                 price: dto.price
             },
             select: {

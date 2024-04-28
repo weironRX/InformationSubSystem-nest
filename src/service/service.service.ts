@@ -40,7 +40,7 @@ export class ServiceService {
     }
 
     async create(id: number, dto: CreateServiceDto) {
-        const existService = await this.prisma.service.findUnique({
+        const existService = await this.prisma.service.findFirst({
             where: {
                 name: dto.name
             }

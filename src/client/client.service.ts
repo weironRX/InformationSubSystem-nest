@@ -60,7 +60,7 @@ export class ClientService {
     }
 
     async create(id: number, dto: CreateClientDto) {
-        const existClient = await this.prisma.client.findUnique({
+        const existClient = await this.prisma.client.findFirst({
             where: {
                 alias: dto.alias
             }

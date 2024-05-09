@@ -5,6 +5,8 @@ import { Prisma, PrismaClient, User } from '@prisma/client'
 import { UserDto } from './dto/user.dto'
 import { BadRequestException } from '@nestjs/common/exceptions'
 import { hash } from 'argon2'
+import { generatePassword } from 'src/utils/generate-password'
+import { ChangePasswordDto } from './dto/change-password.dto'
 
 @Injectable()
 export class UserService {
@@ -26,14 +28,6 @@ export class UserService {
 	}
 
 	async updateProfile(id: number, dto: UserDto) {
-		const sameUser = await this.prisma.user.findUnique({
-            where: {
-                login: dto.login
-            }
-        })
-
-		if (id !== sameUser.id)
-			throw new BadRequestException('Email in use already')
 
 		const user = await await this.prisma.user.findUnique({
 			where: {
@@ -53,5 +47,21 @@ export class UserService {
 		})
 
 		return updatedUser
+	}
+
+	async recoverPassword(id: number) {
+		const user = await this.prisma.user.update({
+			where: {
+				id: +id,
+			},
+			data: {
+				password: await hash(generatePassword(8))
+			},
+			select: {
+				...returnUserObject
+			}
+		})
+
+		return user
 	}
 }

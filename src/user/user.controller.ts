@@ -8,11 +8,13 @@ import {
 	ValidationPipe,
 	Patch,
 	Param,
+	Post,
 } from '@nestjs/common'
 import { UserService } from './user.service'
 import { Auth } from 'src/auth/decorators/auth.decorator'
 import { CurrentUser } from 'src/auth/decorators/user.decorator'
 import { UserDto } from './dto/user.dto'
+import { ChangePasswordDto } from './dto/change-password.dto'
 
 @Controller('users')
 export class UserController {
@@ -31,5 +33,12 @@ export class UserController {
 	@HttpCode(200)
 	async register(@CurrentUser('id') id: number, @Body() dto: UserDto) {
 		return this.userService.updateProfile(id, dto)
+	}
+
+	@Post("recover")
+	@Auth()
+	@HttpCode(200)
+	async recoverPassword(@CurrentUser('id') id: number) {
+		return this.userService.recoverPassword(id);
 	}
 }

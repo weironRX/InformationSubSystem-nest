@@ -20,6 +20,9 @@ export class UserService {
 			where: {
 				id: +id,
 			},
+			select: {
+				...returnUserObject
+			}
 		})
 
 		if (!user) throw new Error('User not found')
@@ -29,11 +32,19 @@ export class UserService {
 
 	async updateProfile(id: number, dto: UserDto) {
 
-		const user = await await this.prisma.user.findUnique({
+		const user = await this.prisma.user.findUnique({
 			where: {
 				id: id,
 			},
 		})
+
+		const sameEmailUser = await this.prisma.user.findUnique({
+			where: {
+				login: dto.login
+			}
+		})
+
+		if (sameEmailUser && sameEmailUser.id != user.id) throw new BadRequestException('Пользователь с такой почтой существует')
 
 		const updatedUser = await this.prisma.user.update({
 			where: {
@@ -44,6 +55,9 @@ export class UserService {
 				name: dto.name,
 				password: dto.password ? await hash(dto.password) : user.password,
 			},
+			select: {
+				...returnUserObject
+			}
 		})
 
 		return updatedUser

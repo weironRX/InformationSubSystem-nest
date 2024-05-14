@@ -69,15 +69,15 @@ export class UserService {
 
 		const currentUser = await this.prisma.user.findUnique({
 			where: {
-				email: dto.email,
+				login: dto.login,
 			}
 		})
 
-		sendRecoverLetter(password, dto.email)
+		sendRecoverLetter(password, dto.login)
 
 		await this.prisma.user.update({
 			where: {
-				email: dto.email,
+				login: dto.login,
 			},
 			data: {
 				password: await hash(password)

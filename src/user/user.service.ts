@@ -65,7 +65,7 @@ export class UserService {
 	}
 
 	async recoverPassword(dto: RecoverDto) {
-		const password: string = generatePassword(length=8)
+		const password: string = generatePassword(8)
 
 		const currentUser = await this.prisma.user.findUnique({
 			where: {

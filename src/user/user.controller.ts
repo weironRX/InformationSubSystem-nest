@@ -37,7 +37,7 @@ export class UserController {
 
 	@Post("recover")
 	@HttpCode(200)
-	async recoverPassword(dto: RecoverDto) {
+	async recoverPassword(@Body() dto: RecoverDto) {
 		return this.userService.recoverPassword(dto);
 	}
 }

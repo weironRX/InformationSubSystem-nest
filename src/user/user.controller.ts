@@ -14,7 +14,7 @@ import { UserService } from './user.service'
 import { Auth } from 'src/auth/decorators/auth.decorator'
 import { CurrentUser } from 'src/auth/decorators/user.decorator'
 import { UserDto } from './dto/user.dto'
-import { ChangePasswordDto } from './dto/change-password.dto'
+import { RecoverDto } from './dto/recover.dto'
 
 @Controller('users')
 export class UserController {
@@ -36,9 +36,8 @@ export class UserController {
 	}
 
 	@Post("recover")
-	@Auth()
 	@HttpCode(200)
-	async recoverPassword(@CurrentUser('id') id: number) {
-		return this.userService.recoverPassword(id);
+	async recoverPassword(dto: RecoverDto) {
+		return this.userService.recoverPassword(dto);
 	}
 }

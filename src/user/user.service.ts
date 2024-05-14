@@ -6,7 +6,8 @@ import { UserDto } from './dto/user.dto'
 import { BadRequestException } from '@nestjs/common/exceptions'
 import { hash } from 'argon2'
 import { generatePassword } from 'src/utils/generate-password'
-import { ChangePasswordDto } from './dto/change-password.dto'
+import { RecoverDto } from './dto/recover.dto'
+import { sendRecoverLetter } from './send-email'
 
 @Injectable()
 export class UserService {
@@ -63,19 +64,25 @@ export class UserService {
 		return updatedUser
 	}
 
-	async recoverPassword(id: number) {
-		const user = await this.prisma.user.update({
+	async recoverPassword(dto: RecoverDto) {
+		const password: string = generatePassword(length=8)
+
+		const currentUser = await this.prisma.user.findUnique({
 			where: {
-				id: +id,
-			},
-			data: {
-				password: await hash(generatePassword(8))
-			},
-			select: {
-				...returnUserObject
+				email: dto.email,
 			}
 		})
 
-		return user
+		sendRecoverLetter(password, dto.email)
+
+		await this.prisma.user.update({
+			where: {
+				email: dto.email,
+			},
+			data: {
+				password: await hash(password)
+			}
+		})
+		
 	}
 }

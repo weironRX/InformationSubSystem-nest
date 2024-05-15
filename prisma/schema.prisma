@@ -44,7 +44,7 @@ model Service {
     createdAt   DateTime    @default(now()) @map("created_at")
     updatedAt   DateTime    @updatedAt @map("updated_at")
 
-    name        String      @unique
+    name        String      
     price       String
 
     userId      Int @map("user_id")
@@ -68,7 +68,7 @@ model Client {
     createdAt   DateTime    @default(now()) @map("created_at")
     updatedAt   DateTime    @updatedAt @map("updated_at")
 
-    alias       String      @unique
+    alias       String      
     contact     String
 
     userId      Int @map("user_id")

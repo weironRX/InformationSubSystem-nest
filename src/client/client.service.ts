@@ -25,15 +25,13 @@ export class ClientService {
     }
 
     async getAllBySearch(id: number, alias: string, contact: string) {
+        console.log(await this.prisma.client.findMany())
+
         const res = await this.prisma.client.findMany({
             where: {
                 userId: id,
-                alias: {
-                    contains: alias
-                },
-                contact: {
-                    contains: contact
-                }
+                ...(alias != "" && {alias: {contains: alias}}),
+                ...(contact != "" && {contact: {contains: contact}})
             },
             select: {
                 ...returnClientObject,
@@ -60,8 +58,10 @@ export class ClientService {
     }
 
     async create(id: number, dto: CreateClientDto) {
+
         const existClient = await this.prisma.client.findFirst({
             where: {
+                userId: id,
                 alias: dto.alias
             }
         })
@@ -83,16 +83,8 @@ export class ClientService {
     }
 
     async update(id: number, dto: ClientDto) {
-        
-        const existClient = await this.prisma.client.findFirst({
-            where: {
-                alias: dto.alias
-            }
-        })
 
-        if (existClient) return
-
-        const updatedService = await this.prisma.client.update({
+        const updatedClient = await this.prisma.client.update({
             where: {
                 id: dto.id,
             },
@@ -105,6 +97,8 @@ export class ClientService {
             }
         })
 
-        return updatedService
+        console.log("Updated", updatedClient)
+
+        return updatedClient
     }
 }

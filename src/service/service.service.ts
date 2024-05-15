@@ -42,6 +42,7 @@ export class ServiceService {
     async create(id: number, dto: CreateServiceDto) {
         const existService = await this.prisma.service.findFirst({
             where: {
+                userId: id,
                 name: dto.name
             }
         })

@@ -65,6 +65,7 @@ export class UserService {
 	}
 
 	async recoverPassword(dto: RecoverDto) {
+		console.log(dto)
 
 		const password: string = generatePassword(8)
 
@@ -73,6 +74,8 @@ export class UserService {
 				login: dto.login,
 			}
 		})
+
+		if (!currentUser) throw new BadRequestException('User not found')
 
 		sendRecoverLetter(password, dto.login)
 
